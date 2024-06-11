@@ -215,7 +215,8 @@ public class App {
 ----
 A Deck constructor method:
 
-```//the constructor, when a new Deck is instantiated
+```
+//the constructor, when a new Deck is instantiated
 	
 	public Deck() {
 
@@ -235,7 +236,8 @@ A Deck constructor method:
 			}
 		}
 		
-	}```
+	}
+```
 
 
 
@@ -243,7 +245,8 @@ A Deck constructor method:
 
 Method to print a Player info
 ----
-```	/*
+```
+/*
 	 * prints out information about the player and calls 
 	 * the describe method for each card in the Hand List
 	 */
@@ -257,4 +260,5 @@ Method to print a Player info
 		for(Card c : this.hand) {
 			c.describe();
 		}
-	}```
+	}
+```
