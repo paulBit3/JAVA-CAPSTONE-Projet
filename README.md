@@ -1,7 +1,9 @@
 🤔About the Project:
+------
 
 The game is an automated version of a classic card game where users can play with the computer. 
 I used a timer on the game, using the Java util timer’ class to make the game running after each play session.
+
 
 Back-end techs: core Java, Object-Oriented Programming
 ----
