@@ -1,102 +1,260 @@
-For the final project you will be creating an automated version of the classic card game WAR, using classes and objects.
+🤔About the Project:
 
-Here are some tips and suggestions as you proceed:
+The game is an automated version of a classic card game where users can play with the computer. 
+I used a timer on the game, using the Java util timer’ class to make the game running after each play session.
 
+Back-end techs: core Java, Object-Oriented Programming
+----
 
-1. You will create Classes with fields & methods for the following:
+- Clone: https://github.com/paulBit3/War-Card-Game.git
 
-- Card
+Features:
+----
+The game compare the value of each card returned by the two players, and print the final score of each player, the winner' name or prints "DRAW" if the score is tied.
 
-- Deck
+----
+The APP
+```
+package application;
 
-- Player
-
-
-2.  You will create an application class, App, which has a main method and which will use the classes created above to accomplish the goal of this project, instantiating each of the objects as needed.  We suggest one Deck, with 52 Cards, and 2 Players.  Remember to create getters, setters and constructors for each of these.
-
-
-3.  As your Final Java Project, this assignment will be written in Java, and will use much of what you have learned so far, including variables, loops, methods, classes, instantiation of objects, and more.
-
-
-4. Start with the basics.  Follow the instructions. 
-
-Remember:  this project is a simple, automated version of the card game WAR.  The idea is to have it run automatically.  
+import java.io.*;
+import java.util.*;
 
 
-1. Create the following classes:
 
-       a.      Card
+import classes.Card;
 
-        i.     Fields
-
-                           1.     value (contains a value from 2-14 representing cards 2-Ace)
-
-                           2.     name (e.g. Ace of Diamonds, or Two of Hearts)
-
-               ii.    Methods
-
-                   1.     Getters and Setters
-
-                   2.     describe (prints out information about a card)
-
-b.     Deck
-
-         i.     Fields
-
-                         1.     cards (List of Card)
-
-               ii.    Methods
-
-                         1.     shuffle (randomizes the order of the cards)
-
-                         2.     draw (removes and returns the top card of the Cards field)
-
-                         3.     In the constructor, when a new Deck is instantiated, the Cards field should be populated with the standard 52 cards.
+/* 
+ * ********************
+ * Step 2
+ * ********************
+ */
 
 
-c.      Player
+import classes.Deck;
+import classes.Player;
 
-i.     Fields
+/*+++                                                +++*
+ * 													    *
+ *            C A R D  -- G A M E -- W A R              *
+ *                                                      *
+ */                                                  
 
-                1.     hand (List of Card)
+public class App {
 
-                 2.     score (set to 0 in the constructor)
+	public static void main(String[] args) {
+		// Testing
+		
+		/* 
+		 * ********************
+		 * Step 2
+		 * ********************
+		 */
+		
+		
+		/*
+		 * creating an automated version of the classic card game WAR
+		 * 
+		 * I used a timer on the game, using the Java.util.temer() class
+		 *  so that instead of having user to always run it, it will run automatically
+		 * and print result
+		 * 
+		 * The code also work very well when it is manually run
+		 */
+		
+		//instantiate the timer
+		Timer timer = new Timer();
+		
+		//create a timer and run it
+		timer.schedule(new TimerTask() {
 
-                 3.     name
+			@Override
+			public void run() {
+				System.out.println("Game progress... ---------\n");
+				
 
-ii.    Methods
+				//a) Instantiate a Deck
+				Deck deck = new Deck();
+				
+				//a) Instantiate two Players
+				Player p1 = new Player("Player 1");
+				Player p2 = new Player("Player 2");
+				
+				
+				//a) call the shuffle method on the deck.
+				deck.shuffle();
+				
+				
+				/*b)
+				 * iterate 52 times calling the Draw method on the 
+				 * other player each iteration using the Deck you instantiated.
+				 */
+				int numberOfPlayers = 2;
+				
+				//outer loop
+				for(int i = 0; i < 52; i++) {
+					//inner loop
+					for(int j = 1; j < numberOfPlayers; j++) {
+						/*
+						 * calling the Draw method
+						 * using the Deck we instantiated
+						 */
+						
+						//if i is even => player1
+						if(i % 2 == 0) {
+							p1.draw(deck);
+						} else {
+							//otherwise player2
+							p2.draw(deck);
+						}
+					}
 
-                1.     describe (prints out information about the player and calls the describe method for each card in the Hand List)
+				}
+				
+				
+				/*c)
+				 * iterate 26 times and call the flip method for each player
+				 * 
+				 */
+				for(int k = 0; k < 26; k++) {
+					/*
+					 * Compare the value of each card returned 
+					 * by the two player’s flip methods
+					 */
+					
+					//return the two player’s flip methods
+					Card p1card = p1.flip();
+					Card p2card = p2.flip();
+					
+					//Compare the value of each card
+					if(p1card.getValue() > p2card.getValue()) {
+						
+						/*Call the incrementScore method on the 
+						 *player whose card has the higher value. 
+						 */
+						p1.incrementScore();
+						
+					} else {
+						
+						/*Call the incrementScore method on the 
+						 *player whose card has the higher value. 
+						 */
+						
+						p2.incrementScore();
+					}
+					
+				}
+				
+				//Print a message to say which player received a point.
+				System.out.println("Player 1, You score " + p1.getScore());
+				System.out.println("Player 2, You score " + p2.getScore());
+				
+				
+				/*d, e)
+				 * 
+				 * After the loop, compare the final score from each player
+				 * Print the final score of each player and 
+				 * either “Player 1”, “Player 2”, or “Draw”,
+				 * depending on which score is higher or if they are both the same.
+				 * 
+				 */
+				if(p1.getScore() > p2.getScore()) {
 
-                2.     flip (removes and returns the top card of the Hand)
+					System.out.println("Player 1: " + p1.getScore() + " You won!");
+					
+				} else if(p1.getScore() < p2.getScore()) {
+					
+					System.out.println("Player 2: " + p2.getScore() + " You won!");
+					
+				} else {
+					
+					System.out.println("It's Draw! " + " Player 1 score: " + p1.getScore() + " = " + " Player 2 score: " + p2.getScore());
+				}
+				
+				/* printing result
+				 * 
+				 * Game progress... ---------
+				 * 
+				 * Player 1, You score 11
+				   Player 2, You score 15
+				   Player 2: 15 You won!
+				   
+				   Player 1, You score 15
+				   Player 2, You score 11
+				   Player 1: 15 You won!
+				   
+				   Player 1, You score 13
+				   Player 2, You score 13
+				   It's Draw!  Player 1 score: 13 =  Player 2 score: 13
+				   
+				   Next round starting ...
+				   
+				   Game progress... ---------
 
-                3.     draw (takes a Deck as an argument and calls the draw method on the deck, adding the returned Card to the hand field)
+				   Player 1, You score 11
+				   Player 2, You score 15
+				   Player 2: 15 You won!
+				 */
+				System.out.println();
+				
+				System.out.println("Next round starting ...\n");
+				
+			}
+			
+		}, 1000*5, 1000*5);
+		
+		
+		
 
-               4.     incrementScore (adds 1 to the Player’s score field)
+	}
+
+```
 
 
-2. Create a class called App with a main method.
 
-a.      Instantiate a Deck and two Players, call the shuffle method on the deck.
+----
+A Deck constructor method:
 
-b.     Using a traditional for loop, iterate 52 times calling the Draw method on the other player each iteration using the Deck you instantiated.
+```//the constructor, when a new Deck is instantiated
+	
+	public Deck() {
 
-c.     Using a traditional for loop, iterate 26 times and call the flip method for each player.
+		//we know each card has a name and value
+		
+		//let create a List to return a type of  card
+		List<String> type = Arrays.asList("Diamonds", "Clubs", "Hearts", "Spades");
+		
+		//outer looping through the value 2-14
+		for(int i=2; i<= 14; i++) {
+			
+			//inner looping the card type
+			for(String str: type) {
+				
+				//creating a new card
+				cards.add(new Card(i, str));
+			}
+		}
+		
+	}```
 
-Compare the value of each card returned by the two player’s flip methods. Call the incrementScore method on the player whose card has the higher value.  Print a message to say which player received a point.
-Note:  If the values are equal (it is a tie), print a message saying that no point was awarded.
-d.      After the loop, compare the final score from each player.
 
-e.      Print the final score of each player and either “Player 1”, “Player 2”, or “Draw” depending on which score is higher or if they are both the same.
 
- 
+----
 
-3.  Tips:  Printing out information throughout the game adds value including easier debugging as you progress and a better user experience.
-
-a.  Using the Card describe() method when each card is flipped illustrates the game play.
-
-b.  Printing the winner of each turn adds interest -- or a message indicating a tie.
-
-c.  Printing the updated score after each turn shows game progression.
-
-d.  At the end of the game: print the final score of each player and the winner’s name or “Draw” if the result is a tie.
+Method to print a Player info
+----
+```	/*
+	 * prints out information about the player and calls 
+	 * the describe method for each card in the Hand List
+	 */
+	public void describe() {
+		//printing player info
+		System.out.println("Player: " + name
+				+"\n"
+				);
+		
+		//printing card info in hand list
+		for(Card c : this.hand) {
+			c.describe();
+		}
+	}```
