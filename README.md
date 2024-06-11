@@ -5,7 +5,7 @@ The game is an automated version of a classic card game where users can play wit
 I used a timer on the game, using the Java util timer’ class to make the game running after each play session.
 
 ------
-Back-end techs stack: core Java, Object-Oriented Programming
+- Back-end techs stack: core Java, Object-Oriented Programming
 
 ----
 
