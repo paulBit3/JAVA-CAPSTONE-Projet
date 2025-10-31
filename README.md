@@ -9,7 +9,8 @@ I used a timer on the game, using the Java util timer’ class to make the game 
 
 ----
 
-- ```Clone: https://github.com/paulBit3/CARD-GAME.git```
+- ```Clone: https://github.com/paulBit3/CARD-GAME.git``` or
+- ```Clone: https://github.com/paulBit3/JAVA-CAPSTONE-Project.git```
 
 Features:
 ----
